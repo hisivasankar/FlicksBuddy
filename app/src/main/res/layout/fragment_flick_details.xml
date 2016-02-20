@@ -1,56 +1,22 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/activity_horizontal_margin"
-    tools:context=".layouts.FlickDetailsActivityFragment"
+    android:orientation="vertical"
+    tools:context=".fragments.FlickDetailsFragment"
     tools:showIn="@layout/activity_flick_details">
 
-    <ScrollView
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager_flick_holder"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+        <android.support.v4.view.PagerTabStrip
+            style="@style/PagerTitle"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:elevation="8dp" />
 
-            <ImageView
-                android:id="@+id/image_flick_poster"
-                android:layout_width="185dp"
-                android:layout_height="250dp"
-                android:layout_alignParentTop="true" />
-
-            <TextView
-                android:id="@+id/text_release_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:layout_marginStart="30dp"
-                android:layout_toEndOf="@+id/image_flick_poster"
-                android:layout_toRightOf="@+id/image_flick_poster"
-                android:padding="10dp"
-                android:textSize="@dimen/abc_text_size_large_material"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/text_rating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/text_release_date"
-                android:layout_marginLeft="30dp"
-                android:layout_marginStart="30dp"
-                android:layout_toEndOf="@+id/image_flick_poster"
-                android:layout_toRightOf="@+id/image_flick_poster"
-                android:padding="10dp"
-                android:textSize="@dimen/abc_text_size_medium_material" />
-
-            <TextView
-                android:id="@+id/text_flick_overview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/image_flick_poster"
-                android:paddingTop="10dp"
-                android:typeface="sans" />
-        </RelativeLayout>
-    </ScrollView>
-</FrameLayout>
+    </android.support.v4.view.ViewPager>
+</LinearLayout>

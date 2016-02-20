@@ -1,4 +1,4 @@
-package com.hisivasankar.flicksbuddy.layouts;
+package com.hisivasankar.flicksbuddy.activities;
 
 import android.os.Bundle;
 import android.preference.ListPreference;

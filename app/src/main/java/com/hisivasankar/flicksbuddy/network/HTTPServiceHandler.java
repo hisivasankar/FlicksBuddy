@@ -1,6 +1,5 @@
-package com.hisivasankar.flicksbuddy.utils;
+package com.hisivasankar.flicksbuddy.network;
 
-import android.net.Uri;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -8,9 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Map;
 
 /**
  * Created by Sivasankar on 12/24/2015.
@@ -22,26 +19,13 @@ public class HTTPServiceHandler {
 
     private StringBuffer dataBuffer;
     private HttpURLConnection httpURLConnection;
-    private Uri.Builder uriBuilder;
     private BufferedReader bufferedReader;
 
-    private URL getURL(String api, Map<String, String> params) throws MalformedURLException {
-        if (params != null) {
-            uriBuilder = Uri.parse(api).buildUpon();
-            for (Map.Entry<String, String> param : params.entrySet()) {
-                uriBuilder.appendQueryParameter(param.getKey(), param.getValue());
-            }
-        } else {
-            return new URL(api);
-        }
-        Log.d("URL", uriBuilder.toString());
-        return new URL(uriBuilder.toString());
-    }
-
-    public String doGet(final String caller, String api, Map<String, String> params) throws MalformedURLException {
+    public String doGet(final String url, String caller) throws IOException {
         InputStream is;
         try {
-            httpURLConnection = (HttpURLConnection) getURL(api, params).openConnection();
+            URL apiURL = new URL(url);
+            httpURLConnection = (HttpURLConnection) apiURL.openConnection();
             httpURLConnection.setRequestMethod(GET);
             httpURLConnection.connect();
             if (httpURLConnection.getResponseCode() != 200) return null;
@@ -53,11 +37,13 @@ public class HTTPServiceHandler {
             while ((line = bufferedReader.readLine()) != null) {
                 dataBuffer.append(line);
             }
-            if (dataBuffer.length() == 0) return null;
+            if (dataBuffer.length() == 0)
+                throw new NullPointerException("Reponse from server is null");
+            Log.d(caller, dataBuffer.toString());
             return dataBuffer.toString();
         } catch (IOException e) {
-            e.printStackTrace();
             Log.e(caller, e.getMessage());
+            throw e;
         } finally {
             if (httpURLConnection != null) {
                 httpURLConnection.disconnect();
@@ -66,15 +52,10 @@ public class HTTPServiceHandler {
                 try {
                     bufferedReader.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
                     Log.e(caller, "Unable to close BufferedReader");
+                    throw e;
                 }
             }
         }
-        return null;
-    }
-
-    public String doPost(final String caller, String api, Map<String, String> params) {
-        return null;
     }
 }

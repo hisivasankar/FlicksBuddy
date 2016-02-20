@@ -1,0 +1,74 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            tools:context=".fragments.OverviewFragment">
+
+            <ImageView
+                android:id="@+id/image_flick_poster"
+                android:layout_width="185dp"
+                android:layout_height="250dp"
+                android:layout_alignParentTop="true" />
+
+            <TextView
+                android:id="@+id/text_release_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_toEndOf="@+id/image_flick_poster"
+                android:layout_toRightOf="@+id/image_flick_poster"
+                android:padding="10dp"
+                android:textSize="@dimen/abc_text_size_large_material"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/text_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_release_date"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_toEndOf="@+id/image_flick_poster"
+                android:layout_toRightOf="@+id/image_flick_poster"
+                android:padding="10dp"
+                android:textSize="@dimen/abc_text_size_medium_material" />
+
+            <Button
+                android:id="@+id/button_mark_as_favorite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/text_rating"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_toEndOf="@+id/image_flick_poster"
+                android:layout_toRightOf="@+id/image_flick_poster"
+                android:text="Mark As Favorite" />
+
+            <View
+                android:id="@+id/action_divider"
+                style="@style/divider"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_below="@+id/image_flick_poster" />
+
+            <TextView
+                android:id="@+id/text_flick_overview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/action_divider"
+                android:text="Lala dada dum dum" />
+        </RelativeLayout>
+    </ScrollView>
+</FrameLayout>
+
+
