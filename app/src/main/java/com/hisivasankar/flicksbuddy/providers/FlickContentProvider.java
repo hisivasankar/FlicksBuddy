@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.hisivasankar.flicksbuddy.contracts.FlickContract;
 import com.hisivasankar.flicksbuddy.persistance.FlickDBHelper;
@@ -16,6 +17,7 @@ import com.hisivasankar.flicksbuddy.persistance.FlickDBHelper;
  * Created by I308944 on 2/20/2016.
  */
 public class FlickContentProvider extends ContentProvider {
+    public static final String LOG_TAG = FlickContentProvider.class.getSimpleName();
 
     private final static int FAVOURITES = 25;
     private final static int FAVOURITE_WITH_ID = 26;
@@ -34,6 +36,7 @@ public class FlickContentProvider extends ContentProvider {
         final String authority = FlickContract.CONTENT_AUTHORITY;
 
         uriMatcher.addURI(authority, FlickContract.PATH_FAVOURITES, FAVOURITES);
+        uriMatcher.addURI(authority, FlickContract.PATH_FAVOURITES + "/#", FAVOURITE_WITH_ID);
 
         return uriMatcher;
     }
@@ -64,9 +67,27 @@ public class FlickContentProvider extends ContentProvider {
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         final int match = sUriMatcher.match(uri);
+
+        Log.d(LOG_TAG, "Matcher ID : " + match);
         Cursor resultCursor = null;
         switch (match) {
             case FAVOURITES:
+                resultCursor = mDBHelper.getReadableDatabase().query(
+                        FlickContract.FavouriteEntry.TABLE_NAME,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder
+                );
+                if (resultCursor == null) {
+                    Log.d(LOG_TAG, "Watch out bro, Cursor is null");
+                } else {
+                    Log.d(LOG_TAG, "Valid Cursor found");
+                }
+                break;
+            case FAVOURITE_WITH_ID:
                 resultCursor = mDBHelper.getReadableDatabase().query(
                         FlickContract.FavouriteEntry.TABLE_NAME,
                         projection,
@@ -91,7 +112,21 @@ public class FlickContentProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        return 0;
+        int numRowsDeleted = 0;
+        final int match = sUriMatcher.match(uri);
+
+        switch (match) {
+            case FAVOURITE_WITH_ID:
+                numRowsDeleted = mDBHelper.getWritableDatabase().delete(
+                        FlickContract.FavouriteEntry.TABLE_NAME,
+                        selection,
+                        selectionArgs
+                );
+                break;
+            default:
+                throw new UnsupportedOperationException("Unknown type : " + uri);
+        }
+        return numRowsDeleted;
     }
 
     @Nullable

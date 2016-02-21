@@ -3,8 +3,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".activities.FlickListingActivity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_popularity"
         android:orderInCategory="100"
+        android:title="Popular"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_top_rated"
+        android:orderInCategory="101"
+        android:title="Top Rated"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_favourites"
+        android:orderInCategory="102"
+        android:title="Show Favourites"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="103"
         android:title="@string/action_settings"
         app:showAsAction="never" />
+
 </menu>

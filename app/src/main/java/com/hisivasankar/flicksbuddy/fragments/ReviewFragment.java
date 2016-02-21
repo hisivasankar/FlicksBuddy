@@ -63,6 +63,7 @@ public class ReviewFragment extends Fragment implements ITaskCompleted {
 
         View rootView = inflater.inflate(R.layout.fragment_reviews, container, false);
         mListViewReviews = (ListView) rootView.findViewById(R.id.list_view_reviews);
+        mListViewReviews.setEmptyView(rootView.findViewById(android.R.id.empty));
 
         mReviewAdapter = new ReviewsAdapter(mContext);
         mListViewReviews.setAdapter(mReviewAdapter);

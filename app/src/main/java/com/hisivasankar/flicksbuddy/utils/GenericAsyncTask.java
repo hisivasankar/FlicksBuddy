@@ -2,6 +2,7 @@ package com.hisivasankar.flicksbuddy.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
@@ -17,13 +18,14 @@ import com.hisivasankar.flicksbuddy.model.Flicks;
 import com.hisivasankar.flicksbuddy.model.Reviews;
 import com.hisivasankar.flicksbuddy.model.Trailers;
 import com.hisivasankar.flicksbuddy.network.HTTPServiceHandler;
+import com.hisivasankar.flicksbuddy.parser.FlickParser;
 
 import java.io.IOException;
 
 /**
  * Created by I308944 on 2/18/2016.
  */
-public class GenericAsyncTask extends AsyncTask<String, Void, Object> {
+public class GenericAsyncTask extends AsyncTask<Object, Void, Object> {
     public static final String LOG_TAG = GenericAsyncTask.class.getSimpleName();
     private final static Gson sGson = new GsonBuilder().create();
     private Context mContext;
@@ -49,7 +51,7 @@ public class GenericAsyncTask extends AsyncTask<String, Void, Object> {
     }
 
     @Override
-    protected Object doInBackground(String... params) {
+    protected Object doInBackground(Object... params) {
         HTTPServiceHandler httpHandler = new HTTPServiceHandler();
         String url = null, data = null;
         try {
@@ -72,6 +74,11 @@ public class GenericAsyncTask extends AsyncTask<String, Void, Object> {
                     data = httpHandler.doGet(url, LOG_TAG);
                     Reviews reviews = sGson.fromJson(data, Reviews.class);
                     return reviews;
+                case Constants.FAVOURITE_MOVIES_REQUEST:
+                    Cursor cursor = (Cursor) params[0];
+                    Flicks favFlicks = FlickParser.parserFlicks(cursor);
+                    cursor.close();
+                    return favFlicks;
                 default:
                     Log.d(LOG_TAG, "Invalid Request Type");
             }

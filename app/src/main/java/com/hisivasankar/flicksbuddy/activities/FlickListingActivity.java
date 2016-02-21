@@ -7,8 +7,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import com.hisivasankar.flicksbuddy.R;
 import com.hisivasankar.flicksbuddy.fragments.FlickDetailsFragment;
@@ -40,30 +38,6 @@ public class FlickListingActivity extends AppCompatActivity implements IFlickSel
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_home, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            Intent settings = new Intent(this, SettingsActivity.class);
-            startActivity(settings);
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public void onFlickSelected(Flicks.Flick flick) {
         if (mIsTwoPaneLayout) {
             FlickDetailsFragment flickDetailsFragment = FlickDetailsFragment.newInstance(flick);
@@ -75,6 +49,5 @@ public class FlickListingActivity extends AppCompatActivity implements IFlickSel
             flickDetailsIntent.putExtra(Constants.BUNDLE_FLICK_DETAILS, flick);
             startActivity(flickDetailsIntent);
         }
-
     }
 }

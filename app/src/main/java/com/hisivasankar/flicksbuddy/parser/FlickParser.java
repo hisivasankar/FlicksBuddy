@@ -1,6 +1,7 @@
 package com.hisivasankar.flicksbuddy.parser;
 
 import android.database.Cursor;
+import android.util.Log;
 
 import com.hisivasankar.flicksbuddy.contracts.FlickContract;
 import com.hisivasankar.flicksbuddy.model.Flicks;
@@ -12,13 +13,14 @@ import java.util.List;
  * Created by I308944 on 2/20/2016.
  */
 public class FlickParser {
+    public static final String LOG_TAG = FlickParser.class.getSimpleName();
 
-    public Flicks parserFlicks(Cursor cursor) {
+    public static Flicks parserFlicks(Cursor cursor) {
 
         Flicks flicks = new Flicks();
         List<Flicks.Flick> flickList = new ArrayList<>();
 
-        while (cursor.moveToNext()) {
+        while (cursor != null && cursor.moveToNext()) {
             Flicks.Flick flick = new Flicks.Flick();
 
             int movieIDIndex = cursor.getColumnIndex(FlickContract.FavouriteEntry.COLUMN_MOVIE_ID);
@@ -37,6 +39,9 @@ public class FlickParser {
 
             flickList.add(flick);
         }
+        flicks.setResults(flickList);
+
+        Log.d(LOG_TAG, "Flick Count : " + flickList.size());
 
         return flicks;
     }

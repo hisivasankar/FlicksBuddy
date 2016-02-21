@@ -63,16 +63,10 @@ public class TrailerFragment extends Fragment implements ITaskCompleted {
 
         View rootView = inflater.inflate(R.layout.fragment_trailer, container, false);
         mListViewTrailers = (ListView) rootView.findViewById(R.id.list_view_trailers);
+        mListViewTrailers.setEmptyView(rootView.findViewById(android.R.id.empty));
 
         mTrailerAdapter = new TrailersAdapter(mContext);
         mListViewTrailers.setAdapter(mTrailerAdapter);
-
-        /*mListViewTrailers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-        });*/
 
         if (savedInstanceState == null) {
             GenericAsyncTask mTrailerTask = new GenericAsyncTask(mContext, Constants.MOVIES_TRAILERS_API_REQUEST, this, mFlickDetails);

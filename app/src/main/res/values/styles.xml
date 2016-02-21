@@ -34,4 +34,24 @@
         <item name="android:padding">10dp</item>
     </style>
 
+    <style name="ViewEmpty">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textColor">@color/light_grey</item>
+        <item name="android:textSize">30sp</item>
+    </style>
+
+    <style name="Theme.Rating" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">@color/navy_blue</item>
+        <item name="android:isIndicator">true</item>
+        <item name="android:numStars">10</item>
+    </style>
+
+    <style name="FavouriteButton">
+        <item name="android:layout_width">60dp</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:src">@android:drawable/btn_star_big_off</item>
+        <item name="android:state_selected">true</item>
+    </style>
+
 </resources>

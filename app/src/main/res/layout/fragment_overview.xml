@@ -31,35 +31,32 @@
                 android:textSize="@dimen/abc_text_size_large_material"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/text_rating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/text_release_date"
+            <ImageButton
+                android:id="@+id/image_button_set_as_favourite"
+                style="@style/FavouriteButton"
+                android:layout_below="@+id/text_release_date"
                 android:layout_marginLeft="20dp"
                 android:layout_marginStart="20dp"
                 android:layout_toEndOf="@+id/image_flick_poster"
                 android:layout_toRightOf="@+id/image_flick_poster"
-                android:padding="10dp"
-                android:textSize="@dimen/abc_text_size_medium_material" />
+                android:padding="10dp" />
 
-            <Button
-                android:id="@+id/button_mark_as_favorite"
+            <RatingBar
+                android:id="@+id/rating_flick_votes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/text_rating"
-                android:layout_marginLeft="20dp"
-                android:layout_marginStart="20dp"
-                android:layout_toEndOf="@+id/image_flick_poster"
-                android:layout_toRightOf="@+id/image_flick_poster"
-                android:text="Mark As Favorite" />
+                android:layout_below="@+id/image_flick_poster"
+                android:layout_marginTop="10dp"
+                android:isIndicator="true"
+                android:theme="@style/Theme.Rating" />
 
             <View
                 android:id="@+id/action_divider"
                 style="@style/divider"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:layout_below="@+id/image_flick_poster" />
+                android:layout_below="@+id/rating_flick_votes" />
+
 
             <TextView
                 android:id="@+id/text_flick_overview"
@@ -67,6 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/action_divider"
                 android:text="Lala dada dum dum" />
+
         </RelativeLayout>
     </ScrollView>
 </FrameLayout>

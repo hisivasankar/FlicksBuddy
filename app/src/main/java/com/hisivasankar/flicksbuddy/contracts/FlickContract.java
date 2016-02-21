@@ -1,6 +1,7 @@
 package com.hisivasankar.flicksbuddy.contracts;
 
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
@@ -16,7 +17,7 @@ public class FlickContract {
     public static class FavouriteEntry implements BaseColumns {
         public final static String TABLE_NAME = "flick_favourites";
 
-        public final static Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(TABLE_NAME).build();
+        public final static Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_FAVOURITES).build();
 
         public final static String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_FAVOURITES;
         public final static String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_FAVOURITES;
@@ -29,7 +30,11 @@ public class FlickContract {
         public final static String COLUMN_RELEASE_DATE = "release_date";
 
         public static Uri buildFavouriteUri(long movieId) {
-            return CONTENT_URI.buildUpon().appendPath(Long.toString(movieId)).build();
+            return ContentUris.withAppendedId(CONTENT_URI, movieId);
+        }
+
+        public static long getMovieIDFromUri(Uri uri) {
+            return Long.parseLong(uri.getPathSegments().get(1));
         }
 
     }
