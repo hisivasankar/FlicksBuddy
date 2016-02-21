@@ -29,8 +29,7 @@ public class FlickDBHelper extends SQLiteOpenHelper {
 
     private String createFavouriteTable() {
         String createFavouriteTable = "CREATE TABLE " + FlickContract.FavouriteEntry.TABLE_NAME + " (" +
-                FlickContract.FavouriteEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-
+           /*     FlickContract.FavouriteEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +*/
                 FlickContract.FavouriteEntry.COLUMN_MOVIE_ID + " INTEGER PRIMARY KEY NOT NULL, " +
                 FlickContract.FavouriteEntry.COLUMN_TITLE + " TEXT NOT NULL, " +
                 FlickContract.FavouriteEntry.COLUMN_OVERVIEW + " TEXT NOT NULL, " +

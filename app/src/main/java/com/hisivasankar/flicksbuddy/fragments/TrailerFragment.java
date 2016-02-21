@@ -2,10 +2,16 @@ package com.hisivasankar.flicksbuddy.fragments;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.ShareActionProvider;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
@@ -17,6 +23,7 @@ import com.hisivasankar.flicksbuddy.model.Flicks;
 import com.hisivasankar.flicksbuddy.model.Trailers;
 import com.hisivasankar.flicksbuddy.utils.Constants;
 import com.hisivasankar.flicksbuddy.utils.GenericAsyncTask;
+import com.hisivasankar.flicksbuddy.utils.TheMovieDBAPI;
 
 
 /**
@@ -35,6 +42,8 @@ public class TrailerFragment extends Fragment implements ITaskCompleted {
     private Trailers mTrailers;
     private ListView mListViewTrailers;
 
+    private ShareActionProvider mShareActionProvider = null;
+
     public TrailerFragment() {
         // Required empty public constructor
     }
@@ -50,6 +59,7 @@ public class TrailerFragment extends Fragment implements ITaskCompleted {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         if (getArguments() != null) {
             mFlickDetails = getArguments().getParcelable(Constants.BUNDLE_FLICK_DETAILS);
         }
@@ -98,6 +108,35 @@ public class TrailerFragment extends Fragment implements ITaskCompleted {
             mTrailers = (Trailers) object;
             mTrailerAdapter.setDataSource(mTrailers.getResults());
             mTrailerAdapter.notifyDataSetChanged();
+            if (mShareActionProvider != null) {
+                mShareActionProvider.setShareIntent(getTrailerShareIntent());
+            }
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_details, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+
+        MenuItem item = menu.findItem(R.id.action_share);
+        mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
+        mShareActionProvider.setShareIntent(getTrailerShareIntent());
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
+
+    private Intent getTrailerShareIntent() {
+        Intent share = new Intent(Intent.ACTION_SEND);
+        share.setType("text/plain");
+        String shareURL = "Sorry! No Trailers found";
+        if (mTrailerAdapter.getCount() > 0) {
+            shareURL = TheMovieDBAPI.getYoutubeVideoLink(mTrailerAdapter.getItem(0).getKey());
+        }
+        share.putExtra(Intent.EXTRA_TEXT, shareURL);
+        return share;
     }
 }
